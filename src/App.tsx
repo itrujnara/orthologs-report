@@ -5,10 +5,11 @@ import DatabaseSection from "./sections/database_section";
 import AssemblySection from "./sections/assembly_section";
 import SeqFetchSection from "./sections/seq_fetch_section";
 import AlignmentSection from "./sections/alignment_section";
+import PhyloSection from "./sections/phylo_section";
 
 function App() {
   return (
-    <div className="bg-primary text-primary-foreground font-sans w-full min-h-screen">
+    <div className="bg-primary text-primary-foreground font-body w-full min-h-screen">
       <div className="mx-auto min-w-[300px] w-[50%] max-w-[1000px]">
         <TitleSection />
         <QuerySection />
@@ -16,6 +17,7 @@ function App() {
         <AssemblySection />
         <SeqFetchSection />
         <AlignmentSection />
+        <PhyloSection />
       </div>
     </div>
   );

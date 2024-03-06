@@ -2,10 +2,11 @@ import SectionContent from "../components/section_content";
 import SectionHeader from "../components/section_header";
 import DatabaseBlock from "../components/database_block";
 import Figure from "../components/figure";
+import Section from "../components/section";
 
 export default function DatabaseSection() {
   return (
-    <div>
+    <Section>
       <SectionHeader>Database Search</SectionHeader>
       <SectionContent>
         <DatabaseBlock dbname="OMA" path="oma_group.txt" />
@@ -15,6 +16,6 @@ export default function DatabaseSection() {
         <Figure title="Venn Diagram" path="venn.png" />
         <Figure title="Jaccard Index" path="jaccard.png" />
       </SectionContent>
-    </div>
+    </Section>
   );
 }

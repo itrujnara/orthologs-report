@@ -19,7 +19,7 @@ const aminoAcidColors = new Map([
   ["W", "bg-purple-800"], // Tryptophan
   ["Y", "bg-purple-600"], // Tyrosine
   ["V", "bg-blue-600"], // Valine
-  ["-", "bg-gray-300 text-gray-800"], // Gap color
+  ["-", "bg-background"], // Gap color
 ]);
 
 export default function AlignmentRow({

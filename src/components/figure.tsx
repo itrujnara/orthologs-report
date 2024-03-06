@@ -10,7 +10,7 @@ export default function Figure({
   return (
     <>
       <SubsectionHeader>{title}</SubsectionHeader>
-      <img className="w-full max-w-[500px] mx-auto" src={path} alt="Figure" />
+      <img className="w-full max-w-[500px] mx-auto" src={path} alt={title} />
     </>
   );
 }

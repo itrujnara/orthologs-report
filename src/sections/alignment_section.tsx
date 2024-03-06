@@ -1,5 +1,6 @@
 import Alignment from "../components/alignment";
 import Powerful from "../components/powerful";
+import Section from "../components/section";
 import SectionContent from "../components/section_content";
 import SectionHeader from "../components/section_header";
 import SectionParagraph from "../components/section_paragraph";
@@ -8,10 +9,8 @@ import useFasta from "../hooks/useFasta";
 export default function AlignmentSection() {
   const alignment = useFasta("BicD2_aligned.fa");
 
-  console.log(alignment);
-
   return (
-    <div>
+    <Section>
       <SectionHeader>Multiple Sequence Alignment</SectionHeader>
       <SectionContent>
         <SectionParagraph>
@@ -20,6 +19,6 @@ export default function AlignmentSection() {
         </SectionParagraph>
         <Alignment records={alignment} />
       </SectionContent>
-    </div>
+    </Section>
   );
 }

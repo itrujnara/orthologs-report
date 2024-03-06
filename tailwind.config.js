@@ -13,6 +13,7 @@ export default {
       },
       fontFamily: {
         title: ["Maven Pro", "sans-serif"],
+        body: ["Lato", "sans-serif"],
       },
     },
   },

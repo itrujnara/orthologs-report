@@ -1,4 +1,5 @@
 import useFileLines from "../hooks/useFileLines";
+import Card from "./card";
 import MiniCard from "./mini_card";
 import MiniCardWrapper from "./mini_card_wrapper";
 import Powerful from "./powerful";
@@ -17,15 +18,24 @@ export default function DatabaseBlock({
   return (
     <>
       <SubsectionHeader>{dbname}</SubsectionHeader>
-      <SectionParagraph>
-        <Powerful>{lines.length}</Powerful> orthologs were found in the {dbname}{" "}
-        database:
-      </SectionParagraph>
-      <MiniCardWrapper limit={10}>
-        {lines.map((line) =>
-          line ? <MiniCard key={line}>{line}</MiniCard> : <></>
-        )}
-      </MiniCardWrapper>
+      {lines.length > 0 ? (
+        <>
+          <SectionParagraph>
+            <Powerful>{lines.length}</Powerful> orthologs were found in the{" "}
+            {dbname} database:
+          </SectionParagraph>
+          <MiniCardWrapper limit={10}>
+            {lines.map((line) =>
+              line ? <MiniCard key={line}>{line}</MiniCard> : <></>
+            )}
+          </MiniCardWrapper>
+        </>
+      ) : (
+        <Card type="error">
+          No orthologs were found in the{" "}
+          <Powerful type="error">{dbname}</Powerful> database.
+        </Card>
+      )}
     </>
   );
 }

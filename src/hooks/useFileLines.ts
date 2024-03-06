@@ -11,5 +11,12 @@ export default function useFileLines(path: string) {
       .then((res) => setContent(res));
   }, [setContent]);
 
+  if (content.length > 0) {
+    if (content[0].startsWith("<!DOCTYPE html>")) {
+      console.error(`Failed to fetch ${path}`);
+      return [];
+    }
+  }
+
   return content;
 }
