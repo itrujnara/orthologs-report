@@ -15,6 +15,9 @@ const countDistinctScores = (scores: ScoreTableRow[]): Map<number, number> => {
   const scoreCounts = new Map<number, number>();
 
   for (const obj of scores) {
+    if (!obj.score) {
+      continue;
+    }
     if (scoreCounts.has(obj.score)) {
       scoreCounts.set(obj.score, scoreCounts.get(obj.score)! + 1);
     } else {
@@ -68,7 +71,8 @@ export default function AssemblySection() {
         <SectionParagraph>
           {filtered.length > 0 ? (
             <>
-              <Powerful>{filtered.length}</Powerful> orthologs were selected:
+              <Powerful>{filtered.length}</Powerful> orthologs (including the{" "}
+              <Powerful>query</Powerful>) were selected:
               <MiniCardWrapper limit={10}>
                 {filtered.map((line, index) =>
                   line ? <MiniCard key={index}>{line}</MiniCard> : <></>

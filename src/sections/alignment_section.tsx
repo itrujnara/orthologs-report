@@ -5,9 +5,11 @@ import SectionContent from "../components/section_content";
 import SectionHeader from "../components/section_header";
 import SectionParagraph from "../components/section_paragraph";
 import useFasta from "../hooks/useFasta";
+import useYamlEntry from "../hooks/useYamlEntry";
 
 export default function AlignmentSection() {
   const alignment = useFasta("alignment.fa");
+  const use_structures = useYamlEntry("params.yml", "use_structures");
 
   return (
     <Section>
@@ -15,7 +17,12 @@ export default function AlignmentSection() {
       <SectionContent>
         <SectionParagraph>
           The sequences were aligned using the{" "}
-          <Powerful>T-COFFEE Basic</Powerful> algorithm.
+          {use_structures === "true" ? (
+            <Powerful>3D-COFFEE</Powerful>
+          ) : (
+            <Powerful>T-COFFEE Basic</Powerful>
+          )}{" "}
+          algorithm.
         </SectionParagraph>
         <Alignment records={alignment} />
       </SectionContent>
