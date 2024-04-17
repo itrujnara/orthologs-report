@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import Papa from "papaparse";
 
+export interface ScoreTableRow {
+  id: string;
+  id_format: string;
+  [key: string]: string | number; // Dynamic keys for databases
+  score: number;
+}
+
 export default function useCsv<T>(path: string) {
   let [data, setData] = useState<T[]>([{} as T]);
 

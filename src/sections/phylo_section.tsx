@@ -4,7 +4,6 @@ import Section from "../components/section";
 import SectionContent from "../components/section_content";
 import SectionHeader from "../components/section_header";
 import SectionParagraph from "../components/section_paragraph";
-import useFileLines from "../hooks/useFileLines";
 
 const methods = ["IQtree", "FastME"];
 
@@ -32,7 +31,7 @@ export default function PhyloSection() {
           <Enumeration strings={methods} />.
         </SectionParagraph>
         <div className="overflow-x-scroll">
-          <Figure title="Phylogenetic Tree" path="BicD2_tree.png" />
+          <Figure title="Phylogenetic Tree" path="iqtree.png" />
         </div>
       </SectionContent>
     </Section>

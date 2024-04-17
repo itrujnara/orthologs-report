@@ -7,7 +7,7 @@ import SectionParagraph from "../components/section_paragraph";
 import useFasta from "../hooks/useFasta";
 
 export default function AlignmentSection() {
-  const alignment = useFasta("BicD2_aligned.fa");
+  const alignment = useFasta("alignment.fa");
 
   return (
     <Section>

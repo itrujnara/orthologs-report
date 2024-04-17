@@ -1,4 +1,4 @@
-import useFileLines from "../hooks/useFileLines";
+import useCsv, { ScoreTableRow } from "../hooks/useCsv";
 import Card from "./card";
 import MiniCard from "./mini_card";
 import MiniCardWrapper from "./mini_card_wrapper";
@@ -13,19 +13,24 @@ export default function DatabaseBlock({
   dbname: string;
   path: string;
 }) {
-  const lines = useFileLines(path);
+  const data = useCsv<ScoreTableRow>(path);
+  const lines = data
+    ?.filter((row: ScoreTableRow) => row[dbname] === "1")
+    .map((row) => row.id);
+
+  console.log(data);
 
   return (
     <>
       <SubsectionHeader>{dbname}</SubsectionHeader>
-      {lines.length > 0 ? (
+      {lines!.length > 0 ? (
         <>
           <SectionParagraph>
-            <Powerful>{lines.length}</Powerful> orthologs were found in the{" "}
+            <Powerful>{lines!.length}</Powerful> orthologs were found in the{" "}
             {dbname} database:
           </SectionParagraph>
           <MiniCardWrapper limit={10}>
-            {lines.map((line) =>
+            {lines!.map((line) =>
               line ? <MiniCard key={line}>{line}</MiniCard> : <></>
             )}
           </MiniCardWrapper>

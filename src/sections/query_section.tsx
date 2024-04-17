@@ -3,19 +3,13 @@ import SectionContent from "../components/section_content";
 import SectionParagraph from "../components/section_paragraph";
 import Powerful from "../components/powerful";
 import useFileLines from "../hooks/useFileLines";
-import useCsv from "../hooks/useCsv";
 import useYamlEntry from "../hooks/useYamlEntry";
 import Section from "../components/section";
 
-type Samplesheet = {
-  id: string;
-  query: string;
-};
-
 export default function QuerySection() {
+  let meta_id = useYamlEntry("params.yml", "id");
   let id = useFileLines("id.txt");
   let taxid = useFileLines("taxid.txt");
-  let samplesheet = useCsv<Samplesheet>("samplesheet.csv");
   let uniprot_query = useYamlEntry("params.yml", "uniprot_query");
   let exact_match = useYamlEntry("params.yml", "exact_match");
 
@@ -25,16 +19,20 @@ export default function QuerySection() {
       <SectionContent>
         {uniprot_query === "true" ? (
           <SectionParagraph>
-            You queried the protein <Powerful>{samplesheet[0].id}</Powerful>{" "}
-            with Uniprot ID <Powerful>{samplesheet[0].query}</Powerful>.
+            You queried the protein <Powerful>{meta_id}</Powerful> with Uniprot
+            ID <Powerful>{id}</Powerful>.
           </SectionParagraph>
         ) : (
           <SectionParagraph>
-            You queried the protein <Powerful>{samplesheet[0].id}</Powerful>{" "}
-            from a FASTA file.
+            You queried the protein <Powerful>{meta_id}</Powerful> from a FASTA
+            file.
           </SectionParagraph>
         )}
-        {uniprot_query === "false" && exact_match === "true" ? (
+        {uniprot_query === "true" ? (
+          <SectionParagraph>
+            It seems to belong to the NCBI taxon <Powerful>{taxid}</Powerful>.
+          </SectionParagraph>
+        ) : exact_match === "true" ? (
           <SectionParagraph>
             It was found in the database with ID <Powerful>{id[0]}</Powerful>.
             It comes from the NCBI taxon <Powerful>{taxid[0]}</Powerful>.
@@ -45,14 +43,6 @@ export default function QuerySection() {
             <Powerful>{id[0]}</Powerful>. It comes from the NCBI taxon{" "}
             <Powerful>{taxid[0]}</Powerful>.
           </SectionParagraph>
-        )}
-        {uniprot_query === "true" ? (
-          <SectionParagraph>
-            It seems to come from the NCBI taxon <Powerful>{taxid[0]}</Powerful>
-            .
-          </SectionParagraph>
-        ) : (
-          <></>
         )}
       </SectionContent>
     </Section>

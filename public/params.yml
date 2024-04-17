@@ -1,3 +1,5 @@
-merge_strategy: intersection
-uniprot_query: false
+use_centroid: true
+min_score: 3
+uniprot_query: true
 exact_match: false
+id: BicD2
