@@ -1,3 +1,4 @@
+import TooltippedText from "@/components/tooltipped_text";
 import Card from "../components/card";
 import MiniCard from "../components/mini_card";
 import MiniCardWrapper from "../components/mini_card_wrapper";
@@ -11,7 +12,7 @@ import useCsv, { ScoreTableRow } from "../hooks/useCsv";
 import useFileLines from "../hooks/useFileLines";
 import useYamlEntry from "../hooks/useYamlEntry";
 
-const countDistinctScores = (scores: ScoreTableRow[]): Map<number, number> => {
+function countDistinctScores(scores: ScoreTableRow[]): Map<number, number> {
   const scoreCounts = new Map<number, number>();
 
   for (const obj of scores) {
@@ -27,7 +28,31 @@ const countDistinctScores = (scores: ScoreTableRow[]): Map<number, number> => {
 
   // sort by score
   return new Map(Array.from(scoreCounts.entries()).sort(([a], [b]) => a - b));
-};
+}
+
+function Goodness() {
+  return (
+    <TooltippedText tooltipText="Goodness is the ratio of mean score to max score. It approximates the percentage of theoretical support that has been found.">
+      goodness
+    </TooltippedText>
+  );
+}
+
+function ConsensusPercentage() {
+  return (
+    <TooltippedText tooltipText="The percentage of orthologs that are supported by all the sources.">
+      consensus percentage
+    </TooltippedText>
+  );
+}
+
+function PrivatePercentage() {
+  return (
+    <TooltippedText tooltipText="The percentage of orthologs that are supported by only one source.">
+      percentage of privates
+    </TooltippedText>
+  );
+}
 
 export default function AssemblySection() {
   const scores = useCsv<ScoreTableRow>("score_table.csv");
@@ -35,12 +60,17 @@ export default function AssemblySection() {
   const filtered = useFileLines("filtered_hits.txt");
   const use_centroid = useYamlEntry("params.yml", "use_centroid");
   const min_score = useYamlEntry("params.yml", "min_score");
+  const mean_score = useYamlEntry("orthostats.yml", "mean");
+  const mode_score = useYamlEntry("orthostats.yml", "mode");
+  const goodness = useYamlEntry("orthostats.yml", "goodness");
+  const percent_max = useYamlEntry("orthostats.yml", "percent_max");
+  const percent_privates = useYamlEntry("orthostats.yml", "percent_privates");
 
   return (
     <Section>
       <SectionHeader>Assembly</SectionHeader>
-      <SubsectionHeader>Scores</SubsectionHeader>
       <SectionContent>
+        <SubsectionHeader>Scores</SubsectionHeader>
         <SectionParagraph>
           <Powerful>{scores.length}</Powerful> orthologs were found.
         </SectionParagraph>
@@ -54,6 +84,15 @@ export default function AssemblySection() {
               </li>
             ))}
           </ul>
+        </SectionParagraph>
+        <SubsectionHeader>Stats</SubsectionHeader>
+        <SectionParagraph>
+          The mean score is <Powerful>{mean_score}</Powerful>. The mode score is{" "}
+          <Powerful>{mode_score}</Powerful>. The <Goodness /> is{" "}
+          <Powerful>{goodness}</Powerful>. The <ConsensusPercentage /> is{" "}
+          <Powerful>{parseFloat(percent_max!) * 100}</Powerful>%. The{" "}
+          <PrivatePercentage /> is{" "}
+          <Powerful>{parseFloat(percent_privates!) * 100}</Powerful>%.
         </SectionParagraph>
         <SubsectionHeader>Filtering</SubsectionHeader>
         <SectionParagraph>
