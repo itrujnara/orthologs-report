@@ -12,7 +12,9 @@ export default function TitleSection() {
         </h1>
       </div>
       <div className="text-center py-2 text-2xl">Analysis report</div>
-      <div className="text-center py-2 text-xl">Version dev</div>
+      <div className="text-center py-2 text-xl">
+        Version 1.0.0 – Marvelous Mainsail
+      </div>
     </div>
   );
 }
