@@ -22,13 +22,13 @@ function Enumeration({ strings }: { strings: string[] }) {
 
 export default function PhyloSection() {
   let methods: string[] = [];
-  const use_iqtree = useYamlEntry("params.yml", "use_iqtree");
-  const use_fastme = useYamlEntry("params.yml", "use_fastme");
+  const skip_iqtree = useYamlEntry("params.yml", "skip_iqtree");
+  const skip_fastme = useYamlEntry("params.yml", "skip_fastme");
 
-  if (use_iqtree === "true") {
+  if (skip_iqtree === "false") {
     methods.push("IQ-TREE");
   }
-  if (use_fastme === "true") {
+  if (skip_fastme === "false") {
     methods.push("FastME");
   }
 
@@ -46,14 +46,14 @@ export default function PhyloSection() {
             <>No trees were generated.</>
           )}
         </SectionParagraph>
-        {use_iqtree === "true" ? (
+        {skip_iqtree === "false" ? (
           <div className="overflow-x-scroll">
             <Figure title="IQ-TREE" path="iqtree.png" />
           </div>
         ) : (
           <></>
         )}
-        {use_fastme === "true" ? (
+        {skip_fastme === "false" ? (
           <div className="overflow-x-scroll">
             <Figure title="FastME" path="fastme.png" />
           </div>
