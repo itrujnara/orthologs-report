@@ -8,6 +8,14 @@ export interface ScoreTableRow {
   score: number;
 }
 
+export interface MergeTableRow {
+  id: string;
+  one: string;
+  many: string;
+  in_clusters: string;
+  total: string;
+}
+
 export default function useCsv<T>(path: string) {
   let [data, setData] = useState<T[]>([{} as T]);
 
