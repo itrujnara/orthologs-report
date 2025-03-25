@@ -1,33 +1,33 @@
-import TooltippedText from "@/components/tooltipped_text";
-import Card from "../components/card";
-import MiniCard from "../components/mini_card";
-import MiniCardWrapper from "../components/mini_card_wrapper";
-import Powerful from "../components/powerful";
-import Section from "../components/section";
-import SectionContent from "../components/section_content";
-import SectionHeader from "../components/section_header";
-import SectionParagraph from "../components/section_paragraph";
-import SubsectionHeader from "../components/subsection_header";
-import useCsv, { ScoreTableRow } from "../hooks/useCsv";
-import useFileLines from "../hooks/useFileLines";
-import useYamlEntry from "../hooks/useYamlEntry";
+import TooltippedText from "@/components/tooltipped_text"
+import Card from "../components/card"
+import MiniCard from "../components/mini_card"
+import MiniCardWrapper from "../components/mini_card_wrapper"
+import Powerful from "../components/powerful"
+import Section from "../components/section"
+import SectionContent from "../components/section_content"
+import SectionHeader from "../components/section_header"
+import SectionParagraph from "../components/section_paragraph"
+import SubsectionHeader from "../components/subsection_header"
+import useCsv, { ScoreTableRow } from "../hooks/useCsv"
+import useFileLines from "../hooks/useFileLines"
+import useYamlEntry from "../hooks/useYamlEntry"
 
 function countDistinctScores(scores: ScoreTableRow[]): Map<number, number> {
-  const scoreCounts = new Map<number, number>();
+  const scoreCounts = new Map<number, number>()
 
   for (const obj of scores) {
     if (!obj.score) {
-      continue;
+      continue
     }
     if (scoreCounts.has(obj.score)) {
-      scoreCounts.set(obj.score, scoreCounts.get(obj.score)! + 1);
+      scoreCounts.set(obj.score, scoreCounts.get(obj.score)! + 1)
     } else {
-      scoreCounts.set(obj.score, 1);
+      scoreCounts.set(obj.score, 1)
     }
   }
 
   // sort by score
-  return new Map(Array.from(scoreCounts.entries()).sort(([a], [b]) => a - b));
+  return new Map(Array.from(scoreCounts.entries()).sort(([a], [b]) => a - b))
 }
 
 function Goodness() {
@@ -35,7 +35,7 @@ function Goodness() {
     <TooltippedText tooltipText="Goodness is the ratio of mean score to max score. It approximates the percentage of theoretical support that has been found.">
       goodness
     </TooltippedText>
-  );
+  )
 }
 
 function ConsensusPercentage() {
@@ -43,7 +43,7 @@ function ConsensusPercentage() {
     <TooltippedText tooltipText="The percentage of orthologs that are supported by all the sources.">
       consensus percentage
     </TooltippedText>
-  );
+  )
 }
 
 function PrivatePercentage() {
@@ -51,20 +51,20 @@ function PrivatePercentage() {
     <TooltippedText tooltipText="The percentage of orthologs that are supported by only one source.">
       percentage of privates
     </TooltippedText>
-  );
+  )
 }
 
 export default function AssemblySection() {
-  const scores = useCsv<ScoreTableRow>("score_table.csv");
-  const scoreCounts = countDistinctScores(scores);
-  const filtered = useFileLines("filtered_hits.txt");
-  const use_centroid = useYamlEntry("params.yml", "use_centroid");
-  const min_score = useYamlEntry("params.yml", "min_score");
-  const mean_score = useYamlEntry("orthostats.yml", "mean");
-  const mode_score = useYamlEntry("orthostats.yml", "mode");
-  const goodness = useYamlEntry("orthostats.yml", "goodness");
-  const percent_max = useYamlEntry("orthostats.yml", "percent_max");
-  const percent_privates = useYamlEntry("orthostats.yml", "percent_privates");
+  const scores = useCsv<ScoreTableRow>("score_table.csv")
+  const scoreCounts = countDistinctScores(scores)
+  const filtered = useFileLines("filtered_hits.txt")
+  const use_centroid = useYamlEntry("params.yml", "use_centroid")
+  const min_score = useYamlEntry("params.yml", "min_score")
+  const mean_score = useYamlEntry("orthostats.yml", "mean")
+  const mode_score = useYamlEntry("orthostats.yml", "mode")
+  const goodness = useYamlEntry("orthostats.yml", "goodness")
+  const percent_max = useYamlEntry("orthostats.yml", "percent_max")
+  const percent_privates = useYamlEntry("orthostats.yml", "percent_privates")
 
   return (
     <Section>
@@ -92,7 +92,10 @@ export default function AssemblySection() {
           <Powerful>{goodness}</Powerful>. The <ConsensusPercentage /> is{" "}
           <Powerful>{parseFloat(percent_max!) * 100}</Powerful>%. The{" "}
           <PrivatePercentage /> is{" "}
-          <Powerful>{parseFloat(percent_privates!) * 100}</Powerful>%.
+          <Powerful>
+            {(parseFloat(percent_privates!) * 100).toFixed(2)}
+          </Powerful>
+          %.
         </SectionParagraph>
         <SubsectionHeader>Filtering</SubsectionHeader>
         <SectionParagraph>
@@ -124,5 +127,5 @@ export default function AssemblySection() {
         </SectionParagraph>
       </SectionContent>
     </Section>
-  );
+  )
 }

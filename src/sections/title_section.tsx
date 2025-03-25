@@ -8,7 +8,7 @@ export default function TitleSection() {
           className="h-20"
         />
         <h1 className="w-min text-4xl">
-          <span className="text-nextflow-green">nf-core</span>/reportho
+          <span className="text-nextflow-green text-nowrap">nf-core/</span>reportho
         </h1>
       </div>
       <div className="text-center py-2 text-2xl">Analysis report</div>
