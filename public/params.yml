@@ -1,5 +1,7 @@
-use_centroid: true
-min_score: 3
-uniprot_query: true
-exact_match: false
 id: BicD2
+exact_match: true
+use_centroid: false
+min_score: 3
+skip_merge: false
+min_identity: 0.9
+min_coverage: 0.8
